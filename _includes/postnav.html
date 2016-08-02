@@ -1,9 +1,36 @@
 <div class="nav-wrapper container hide-on-large-only">
-    <a href="/" class="breadcrumb">OpenData.cz</a>
-    <a href="/posts/" class="breadcrumb">Posts</a>
+    {% for hp in site.pages %}
+    {% if hp.homepage and hp.lang == page.lang %}
+     <a href="{{hp.url}}" class="breadcrumb">OpenData.cz</a>
+    {% endif %}
+    {% endfor %}
+
+    {% for p in site.pages %}
+    {% if p.postindex and p.lang == page.lang %}
+     <a href="{{p.url}}" class="breadcrumb">{{ p.title }}</a>
+    {% endif %}
+    {% endfor %}
 </div>
 <div class="nav-wrapper container hide-on-med-and-down">
-    <a href="/" class="breadcrumb">OpenData.cz</a>
-    <a href="/posts/" class="breadcrumb">Posts</a>
+    {% for hp in site.pages %}
+    {% if hp.homepage and hp.lang == page.lang %}
+     <a href="{{hp.url}}" class="breadcrumb">OpenData.cz</a>
+    {% endif %}
+    {% endfor %}
+    {% for p in site.pages %}
+    {% if p.postindex and p.lang == page.lang %}
+     <a href="{{p.url}}" class="breadcrumb">{{ p.title }}</a>
+    {% endif %}
+    {% endfor %}
     <span class="breadcrumb">{{ page.title }}</span>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+    {% assign posts=site.posts | where:"ref", page.ref | sort: 'lang' %}
+    {% for p in posts %}
+        {% if p.lang != page.lang %}
+        <li>
+            <a href="{{ p.url }}" class="{{ p.lang }}">{{ site.langs[page.lang][p.lang] }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>    
 </div>

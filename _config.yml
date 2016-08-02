@@ -17,3 +17,9 @@ gems:
   - jekyll-mentions
   - jekyll-feed
   - jekyll-sitemap
+
+langs:
+  en:
+    cs: česky
+  cs:
+    en: English

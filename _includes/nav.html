@@ -2,9 +2,13 @@
     {% for my_page in site.pages %}
         {% if page.url == my_page.url %}
             {% if my_page.homepage %}
-                <a class="breadcrumb">OpenData.cz</a>
+                <a class="brand-logo breadcrumb"><img src="/assets/logo.png" alt="OpenData.cz"/></a>
             {% else %}
-                <a href="/" class="breadcrumb">OpenData.cz</a>
+                {% for hp in site.pages %}
+                {% if hp.homepage and hp.lang == page.lang %}
+                 <a href="{{hp.url}}" class="breadcrumb">OpenData.cz</a>
+                {% endif %}
+                {% endfor %}
                 <span class="breadcrumb">{{ my_page.title }}</span>
             {% endif %}
         {% endif %}
@@ -14,11 +18,25 @@
     {% for my_page in site.pages %}
         {% if page.url == my_page.url %}
             {% if my_page.homepage %}
-                <a class="breadcrumb">OpenData.cz</a>
+                <a class="brand-logo breadcrumb"><img src="/assets/logo.png" alt="OpenData.cz"/></a>
             {% else %}
-                <a href="/" class="breadcrumb">OpenData.cz</a>
+                {% for hp in site.pages %}
+                {% if hp.homepage and hp.lang == page.lang %}
+                 <a href="{{hp.url}}" class="breadcrumb">OpenData.cz</a>
+                {% endif %}
+                {% endfor %}
                 <span class="breadcrumb">{{ my_page.title }}</span>
             {% endif %}
         {% endif %}
     {% endfor %}
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+    {% assign pages=site.pages | where:"ref", page.ref | sort: 'lang' %}
+    {% for p in pages %}
+        {% if p.lang != page.lang %}
+        <li>
+            <a href="{{ p.url }}" class="{{ p.lang }}">{{ site.langs[page.lang][p.lang] }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
 </div>
