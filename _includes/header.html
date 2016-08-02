@@ -1,0 +1,9 @@
+<header class="site-header" >
+    <nav class="blue" role="navigation">
+        {% if page.layout == 'post' %}
+            {% include postnav.html %}
+        {% else %}
+            {% include nav.html %}
+        {% endif %}
+    </nav>
+</header>
