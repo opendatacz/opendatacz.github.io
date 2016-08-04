@@ -2,7 +2,7 @@
     {% for my_page in site.pages %}
         {% if page.url == my_page.url %}
             {% if my_page.homepage %}
-                <a class="brand-logo breadcrumb"><img src="/assets/logo.png" alt="OpenData.cz"/></a>
+                <a class="brand-logo breadcrumb"><img src="/assets/images/logo.png" alt="OpenData.cz"/></a>
             {% else %}
                 {% for hp in site.pages %}
                 {% if hp.homepage and hp.lang == page.lang %}
@@ -15,10 +15,11 @@
     {% endfor %}
 </div>
 <div class="nav-wrapper container hide-on-med-and-down">
+    <span>
     {% for my_page in site.pages %}
         {% if page.url == my_page.url %}
             {% if my_page.homepage %}
-                <a class="brand-logo breadcrumb"><img src="/assets/logo.png" alt="OpenData.cz"/></a>
+                <a class="brand-logo breadcrumb"><img src="/assets/images/logo.png" alt="OpenData.cz"/></a>
             {% else %}
                 {% for hp in site.pages %}
                 {% if hp.homepage and hp.lang == page.lang %}
@@ -29,6 +30,7 @@
             {% endif %}
         {% endif %}
     {% endfor %}
+    </span>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
     {% assign pages=site.pages | where:"ref", page.ref | sort: 'lang' %}
     {% for p in pages %}

@@ -8,16 +8,22 @@ homepage: true
     <div class="container">
       <h1 class="header center orange-text">OpenData.cz</h1>
       <div class="row center">
-    {% for p in site.pages %}
-    {% if p.postindex and p.lang == page.lang %}
-        <h5 class="header col s12 light">Iniciativa za otevřenou datovou infrastrukturu. <a href="{{p.url}}">Příspěvky</a> </h5>
-    {% endif %}
-    {% endfor %}
+{% for p in site.pages %}
+{% if p.postindex and p.lang == page.lang %}
+      <h5 class="header col s12 light"><a href="{{p.url}}">Iniciativa za otevřenou datovou infrastrukturu.</a></h5>
+{% endif %}
+{% endfor %}
       </div>
     </div>
 </div>
-
 <div class="container">
+
+<p class="flow-text">Naším cílem je vybudování otevřené datové infrastruktury v ČR. Ta bude poskytovat veřejná data komukoliv a kdykoliv a umožní data volně kombinovat. Na základě snadného přístupu k datům může odborná veřejnost svobodně a nezávisle tvořit aplikace ať pro jiné odborníky tak pro laickou veřejnost. Příkladem může být aplikace Rozklikávací rozpočet. Pro lepší představu o tom co jsou to otevřená data shlédněte film #opendata.</p>
+
+<p class="flow-text">Jako přípravu pro budování otevřené datové infrastruktury připravujeme tzv. <a href="http://linked.opendata.cz">katalog dat</a>. Samotnou infrastrukturu již budujeme také. Na práci se podílejí akademici a studenti z dvou českých fakult: <a href="http://www.ksi.mff.cuni.cz">Matematicko-fyzikální fakulta UK</a> a <a href="http://keg.vse.cz/">Fakulta informatiky a statistiky VŠE</a></p>
+
+</div>
+<!--<div class="container">
     <div class="section">
       <div class="row">
         <div class="col s12 m4">
@@ -48,4 +54,4 @@ homepage: true
         </div>
       </div>
     </div>
-</div>
+</div>-->

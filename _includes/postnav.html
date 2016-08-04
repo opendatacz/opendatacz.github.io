@@ -12,6 +12,7 @@
     {% endfor %}
 </div>
 <div class="nav-wrapper container hide-on-med-and-down">
+    <span>
     {% for hp in site.pages %}
     {% if hp.homepage and hp.lang == page.lang %}
      <a href="{{hp.url}}" class="breadcrumb">OpenData.cz</a>
@@ -23,6 +24,7 @@
     {% endif %}
     {% endfor %}
     <span class="breadcrumb">{{ page.title }}</span>
+    </span>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
     {% assign posts=site.posts | where:"ref", page.ref | sort: 'lang' %}
     {% for p in posts %}
