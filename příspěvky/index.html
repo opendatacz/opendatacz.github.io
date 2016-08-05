@@ -43,9 +43,9 @@ postindex: true
 			<div class="section">
                 <h5 class="blue-text"><i class="material-icons left">{{ post.icon }}</i><span class="orange-text">{{ post.title }}</span></h5>
                 <h6 class="">{{ post.date | date: "%Y-%m-%d" }}</h6>
-                <p class="flow-text">
-                    {{ post.excerpt | remove: '<p>' | remove: '<p class="flow-text">' | remove: '</p>' }}
-                </p>
+                <div class="flow-text">
+                    {{ post.excerpt }}
+                </div>
                 {% if post.detail %}
                 <p><a href="{{ post.url }}" class="btn waves-effect waves-light orange"><i class="material-icons left">ondemand_video</i>Vidět více</a></p>
                 {% endif %}                
