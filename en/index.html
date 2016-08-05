@@ -8,19 +8,16 @@ homepage: true
     <div class="container">
       <h1 class="header center orange-text">OpenData.cz</h1>
       <div class="row center">
-    {% for p in site.pages %}
-    {% if p.postindex and p.lang == page.lang %}
-        <h5 class="header col s12 light"><a href="{{p.url}}">Initiative for transparent data infrastructure</a></h5>
-    {% endif %}
-    {% endfor %}
+        <h5 class="header col s12 light">Initiative for transparent data infrastructure</h5>
       </div>
+        <p class="flow-text"> Our goal is to build an open data infrastructure which will enable to access public data in Czech Republic. It will provide data in a form that allows access to anyone at any time and allows to combine it freely. This will allow the creation of applications that the public really needs. An example of the approach is <a href="http://openlylocal.com/">Openly Local</a>. To get a better idea of what open data is all about, see the <a href="/movie/">#opendata short film</a>.</p>      
     </div>
 </div>
 
   <div class="container">
      <div class="row">
           <div class="col s12">
-              <h3 class="center orange-text">What's new</h3>
+              <h2 class="center orange-text">What's new</h2>
                <ul class="collapsible" data-collapsible="accordion">
                 {% for post in site.posts limit:1 %}
                 <li>
@@ -50,9 +47,36 @@ homepage: true
     </div>
   </div>
 
+<div class="container">
+<h2 class="center orange-text">Our data and apps</h2>
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="icon-block">
+        <h3 class="center blue-text"><i class="material-icons">add_shopping_cart</i></h3>
+        <h5 class="center">Applications</h5>
+        <p class="light flow-text">
+        We have built <a href="/applications/">several applications</a> on top of our data infrastructure. 
+        The applications work with various data sources linked together in our infrastructure
+        </p>
+      </div>
+    </div>
+
+    <div class="col s12 m6">
+      <div class="icon-block">
+        <h3 class="center blue-text"><i class="material-icons">share</i></h3>
+        <h5 class="center">Datasets</h5>
+        <p class="light flow-text">
+        See our Linked Data in our <a href="http://linked.opendata.cz">CKAN catalog</a>.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+  
 <div class="container flow-text">
-<p> Our goal is to build an open data infrastructure which will enable to access public data in Czech Republic. It will provide data in a form that allows access to anyone at any time and allows to combine it freely. This will allow the creation of applications that the public really needs. An example of the approach is <a href="http://openlylocal.com/">Openly Local</a>. To get a better idea of what open data is all about, see the #opendata short film.</p>
-<h2 class="center orange-text">Motivation</h2>
+
+<h2 class="center orange-text">Our motivation</h2>
 
 <p>Today, the public administration publishes data mostly through prepared applications. However, those applications only suit a certain type of a user. Therefore, it excludes users who want to use the data in a different way than the public administration intended. An example of this can be data published by public administration about:</p>
 
@@ -115,37 +139,4 @@ homepage: true
 <p>These two concepts are not concurrent. On the contrary, they complement each other. The strategy of eGovernment in The Czech Republic focuses on computerization of the processes in the public administration. The construction of data infrastructure focuses primarily on transparent disclosure of data created during these processes.</p>
 
 <p>The Data infrastructure helps with the computerization of processes (the transparent data can be used by the public administration itself). The more the computerization of public administration processes develops, the more data will be available for transparent disclosure.</p>
-</div>
-
-<div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center blue-text"><i class="material-icons">card_membership</i></h2>
-            <h5 class="center">Open data</h5>
-
-            <p class="light center flow-text"</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center blue-text"><i class="material-icons">share</i></h2>
-            <h5 class="center">Processes</h5>
-
-            <p class="light center flow-text"></p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center blue-text"><i class="material-icons">accessibility</i></h2>
-            <h5 class="center">Applications</h5>
-
-            <p class="light center flow-text"></p>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>
