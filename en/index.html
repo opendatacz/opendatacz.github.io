@@ -17,6 +17,39 @@ homepage: true
     </div>
 </div>
 
+  <div class="container">
+     <div class="row">
+          <div class="col s12">
+              <h3 class="center orange-text">What's new</h3>
+               <ul class="collapsible" data-collapsible="accordion">
+                {% for post in site.posts limit:1 %}
+                <li>
+                  <div class="collapsible-header active"><i class="material-icons blue-text">{{ post.icon }}</i>{{ post.date | date: "%Y-%m-%d" }}: <span class=" orange-text">{{ post.title }}</span></div>
+                  <div class="collapsible-body">
+                    <p class="flow-text">{{ post.excerpt | remove: '<p>' | remove: '<p class="flow-text">' | remove: '</p>' }}</p>
+                    {% if post.detail %}
+                    <a href="{{ post.url }}" class="btn waves-effect waves-light orange"><i class="material-icons left">open_in_browser</i>Read more</a>
+                    {% endif %}
+                  </div>
+                </li>
+                {% endfor %}
+                {% for post in site.posts limit:4 offset:1 %}
+                <li>
+                  <div class="collapsible-header"><i class="material-icons blue-text">{{ post.icon }}</i>{{ post.date | date: "%Y-%m-%d" }}: <span class="orange-text">{{ post.title }}</span></div>
+                  <div class="collapsible-body">
+                    <p class="flow-text">{{ post.excerpt | remove: '<p>' | remove: '<p class="flow-text">' | remove: '</p>' }}</p>
+                    {% if post.detail %}
+                    <a href="{{ post.url }}" class="btn waves-effect waves-light orange"><i class="material-icons left">open_in_browser</i>Read more</a>
+                    {% endif %}
+                  </div>
+                </li>
+                {% endfor %}
+               </ul>
+               <p class="center"><a href="/posts/" class="btn waves-effect waves-light orange"><i class="material-icons left">lightbulb_outline</i>More Posts</a> </p>
+          </div>
+    </div>
+  </div>
+
 <div class="container flow-text">
 <p> Our goal is to build an open data infrastructure which will enable to access public data in Czech Republic. It will provide data in a form that allows access to anyone at any time and allows to combine it freely. This will allow the creation of applications that the public really needs. An example of the approach is <a href="http://openlylocal.com/">Openly Local</a>. To get a better idea of what open data is all about, see the #opendata short film.</p>
 <h2 class="center orange-text">Motivation</h2>
