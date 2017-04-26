@@ -14,11 +14,12 @@ homepage: true
     </div>
 </div>
 <div class="container">
+{% assign posts=site.posts | where:"lang", page.lang %}
      <div class="row">
           <div class="col s12">
               <h3 class="center orange-text">Novinky</h3>
                <ul class="collapsible" data-collapsible="accordion">
-                {% for post in site.posts limit:1 %}
+                {% for post in posts limit:1 %}
                 <li>
                   <div class="collapsible-header active"><i class="material-icons blue-text">{{ post.icon }}</i>{{ post.date | date: "%Y-%m-%d" }}: <span class=" orange-text">{{ post.title }}</span></div>
                   <div class="collapsible-body">
@@ -29,7 +30,7 @@ homepage: true
                   </div>
                 </li>
                 {% endfor %}
-                {% for post in site.posts limit:4 offset:1 %}
+                {% for post in posts limit:4 offset:1 %}
                 <li>
                   <div class="collapsible-header"><i class="material-icons blue-text">{{ post.icon }}</i>{{ post.date | date: "%Y-%m-%d" }}: <span class="orange-text">{{ post.title }}</span></div>
                   <div class="collapsible-body">
