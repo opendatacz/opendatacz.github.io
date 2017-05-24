@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Prohlížeč agend</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="joint.css" />
+  <!--<script src="jquery.min.js"></script>-->
+  <script src="lodash.min.js"></script>
+  <script src="backbone-min.js"></script>
+  <script src="joint.js"></script>
+</head>
+<body>
+ 
+<form id="agendaform">
+  Číslo agendy: <input id="cisloagendy" type="text" value="A1111">
+  <button>Najdi agendu</button>
+</form>
+
+<form id="orgform">
+  IČ organizace: <input id="ic" type="text" value="00007064">
+  <button>Najdi organizaci</button>
+</form>
+
+<div id="search" style="font-size: 160%; color: red;">Vyhledávám ...</div>
+ 
+<div id="myholder"></div>
+ 
+<script>
+
+var graph = new joint.dia.Graph;
+
+var paper = new joint.dia.Paper({
+	el: $('#myholder'),
+	width: 2000,
+	height: 1600,
+	model: graph,
+	gridSize: 1
+});
+
+$("#search").css("display", "none");
+
+function showAgenda ( data ) {
+	graph.clear();
+	var agenda = null;
+	var cinnosti = [];
+	var organizace = [];
+	var predpisy = [];
+	$.each( data.results.bindings, function( key, val ) {
+	  if ( val.kind.value == "Agenda" )	{
+		agenda = {resource:val.resource.value, label:val.label.value};
+	  } else if ( val.kind.value == "Cinnost" ) {
+		if ( val.label.value.length >= 104 )	{
+			cinnosti.push({resource:val.resource.value, label:(val.label.value.slice(0,100) + " ...")});
+		} else {
+			cinnosti.push({resource:val.resource.value, label:val.label.value});
+		}
+	  } else if ( val.kind.value == "Organizace" ) {
+		organizace.push({resource:val.resource.value, label:val.label.value});
+	  } else if ( val.kind.value == "Predpis" ) {
+		if ( val.label )	{
+			predpisy.push({resource:val.resource.value, label:val.label.value});
+		} else {
+			var uri = val.resource.value
+			//var year = uri.slice(uri.lastIndexOf("-")+1, uri.lenght-1);
+			var year = uri.substr(-4, 4);
+			var no = uri.slice(uri.lastIndexOf("/")+1, uri.lastIndexOf("-"));
+			predpisy.push({resource:val.resource.value, label:no+'/'+year+' Sb.' });
+		}
+	  }
+	});
+ 
+	var cinnostiOnRow = 7 ;
+	var cinnostWidth = 160 ;
+	var cinnostHeight = 60 ;
+	var cinnostiHorizontalSpace = 20 ;
+	var cinnostiVerticalSpace = 20 ;
+	
+	var agendaX = 200 ;
+	var agendaY = 100 ;
+	var agendaWidth = cinnostiOnRow * (cinnostWidth + cinnostiHorizontalSpace) + cinnostiHorizontalSpace ;
+	var agendaHeight = Math.ceil(cinnosti.length / cinnostiOnRow) * (cinnostHeight + cinnostiVerticalSpace) + cinnostiVerticalSpace ;
+	
+	var organizaceWidth = 140 ;
+	var organizaceHeight = 45 ;
+	var organizaceHorizontalSpace = 20 ;
+	var organizaceVerticalSpace = 20 ;
+	var organizaciOnRow = Math.ceil( agendaWidth / ( organizaceWidth + organizaceHorizontalSpace ) ) + 1 ;
+	var organizaciInColumn = Math.floor( agendaHeight / ( organizaceHeight + organizaceVerticalSpace ) ) ;
+	
+	var predpisWidth = 100 ;
+	var predpisHeight = 25 ;
+	var predpisHorizontalSpace = 7 ;
+	var predpisVerticalSpace = 20 ;
+	
+	if ( ( 2 * organizaciOnRow + organizaciInColumn ) < organizace.length )	{
+		
+		organizaciInColumn = organizace.length - 2 * organizaciOnRow;
+		agendaHeight = organizaciInColumn * ( organizaceHeight + organizaceVerticalSpace ) - organizaceVerticalSpace;
+		
+	
+	}
+	
+	var rAgenda = new joint.shapes.basic.Rect({
+	  position: { x: agendaX, y: agendaY },
+	  size: { width: agendaWidth, height: agendaHeight },
+	  attrs: { rect: { fill: 'rgb(255, 255, 181)'}, text: { text: agenda.label, fill: 'black' } }
+	});  
+  
+	graph.addCells([rAgenda]);
+  
+	$.each( cinnosti, function ( key, val ) {
+	  var row = Math.floor(key / cinnostiOnRow);
+	  var col = key % cinnostiOnRow ;
+	  var wrappedLabel = joint.util.breakText(val.label, {
+		width: cinnostWidth
+	  });
+	  var rCinnost = new joint.shapes.basic.Rect({
+		position: { x: agendaX + cinnostiHorizontalSpace + ( cinnostWidth + cinnostiHorizontalSpace ) * col, y: agendaY + cinnostiVerticalSpace + ( cinnostHeight + cinnostiVerticalSpace ) * row},
+		size: { width: cinnostWidth, height: cinnostHeight },
+		attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabel, fill: 'black', 'font-size': 10 } }
+	  });
+	  graph.addCells([rCinnost]);
+	  rAgenda.embed(rCinnost)
+	});
+	
+	$.each( organizace,
+	
+		function ( key, val )	{
+			var wrappedLabel = joint.util.breakText(val.label, {
+				width: organizaceWidth
+			});
+			var rOrganizace = null;
+			if ( key < organizaciOnRow )	{
+				rOrganizace = new joint.shapes.basic.Rect({
+					position: { x: agendaX + ( organizaceWidth + organizaceHorizontalSpace ) * key, y: agendaY - organizaceVerticalSpace - organizaceHeight},
+					size: { width: organizaceWidth, height: organizaceHeight },
+					attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabel, fill: 'black', 'font-size': 10 } }
+				});
+			} else if ( key < organizaciOnRow + organizaciInColumn ) {
+				rOrganizace = new joint.shapes.basic.Rect({
+					position: { x: agendaX + agendaWidth + organizaceVerticalSpace, y: agendaY  + ( organizaceHeight + organizaceHorizontalSpace ) * ( key - organizaciOnRow ) },
+					size: { width: organizaceWidth, height: organizaceHeight },
+					attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabel, fill: 'black', 'font-size': 10 } }
+				});
+			} else	{
+				rOrganizace = new joint.shapes.basic.Rect({
+					position: { x: agendaX + ( organizaceWidth + organizaceHorizontalSpace ) * ( 2 * organizaciOnRow + organizaciInColumn  - 1 - key ), y: agendaY + agendaHeight + organizaceVerticalSpace},
+					size: { width: organizaceWidth, height: organizaceHeight },
+					attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabel, fill: 'black', 'font-size': 10 } }
+				});
+			}
+			rOrganizace.resource = val.resource;
+			rOrganizace.kind = 1;
+			var link = new joint.dia.Link({
+				source: { id: rOrganizace.id },
+				target: { id: rAgenda.id }
+			});
+			graph.addCells([rOrganizace, link]);
+		}
+
+	);
+	
+	$.each( predpisy,
+	
+		function ( key, val )	{
+			var wrappedLabel = joint.util.breakText(val.label, {
+				width: predpisWidth
+			});
+			var rPredpis = new joint.shapes.basic.Rect({
+				position: { x: agendaX - predpisWidth - predpisVerticalSpace, y: agendaY - organizaceHeight - organizaceHorizontalSpace  + ( predpisHeight + predpisHorizontalSpace ) * key },
+				size: { width: predpisWidth, height: predpisHeight },
+				attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabel, fill: 'black', 'font-size': 10 } }
+			});
+			var link = new joint.dia.Link({
+				source: { id: rPredpis.id },
+				target: { id: rAgenda.id }
+			});
+			graph.addCells([rPredpis, link]);
+		}
+
+	);
+	
+	paper.off('cell:pointerdblclick');
+	
+	paper.on('cell:pointerdblclick', 
+		function(cellView, evt, x, y)	{
+			cells = graph.findModelsFromPoint({x, y});
+			if ( cells[0] )	{
+				var cell = cells[0];
+				if ( cell && cell.kind && ( cell.kind == 1 ) )	{
+					searchAndShowOrganizationByURI(cell.resource);
+				}
+			}
+		}
+	);
+}
+
+function showOrganization ( data ) {
+	var organizace = null;
+	var agendy = [];
+
+	$.each( data.results.bindings, function( key, val ) {
+		if (val.kind.value == "Organizace")	{
+			organizace = {resource:val.resource.value, label:val.label.value};
+		} else {
+			if ( val.label.value.length >= 104 )	{
+				agendy.push({resource:val.resource.value, label:(val.label.value.slice(0,100) + " ...")});
+			} else {
+				agendy.push({resource:val.resource.value, label:val.label.value});
+			}
+		}
+	});
+
+	graph.clear();
+
+	var agendyMatrixWidth = 6 ;
+
+	var wrappedLabelOrg = joint.util.breakText(organizace.label, {
+		width: 170
+	  });
+	var rOrganizace = new joint.shapes.basic.Rect({
+		position: { x: 100, y: Math.floor(agendy.length / agendyMatrixWidth) * 40 + 80 },
+		size: { width: 170, height: 60 },
+		attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabelOrg, fill: 'black' } }
+	});  
+
+	graph.addCells([rOrganizace]);
+  
+	$.each( agendy, function ( key, val ) {
+	  var row = Math.floor(key / agendyMatrixWidth);
+	  var col = key % agendyMatrixWidth ;
+	  var wrappedLabel = joint.util.breakText(val.label, {
+		width: 170
+	  });
+	  var rAgenda = new joint.shapes.basic.Rect({
+		position: { x: 190 * (col+3), y: 80 * (row+1) },
+		size: { width: 170, height: 60 },
+		attrs: { rect: { fill: 'rgb(255, 255, 181)' }, text: { text: wrappedLabel, fill: 'black', 'font-size': 10 } }
+	  })
+	  rAgenda.resource = val.resource;
+	  rAgenda.kind = 1;
+	  var link = new joint.dia.Link({
+		source: { id: rOrganizace.id },
+		target: { id: rAgenda.id }
+	  });
+	  graph.addCells([rAgenda, link]);
+	});
+	
+	$.each( graph.getElements(), function ( key, val ) {
+		val.toFront();
+	});
+	
+	paper.off('cell:pointerdblclick');
+	
+	paper.on('cell:pointerdblclick', 
+		function(cellView, evt, x, y)	{
+			cells = graph.findModelsFromPoint({x, y});
+			if ( cells[0] )	{
+				var cell = cells[0];
+				if ( cell && cell.kind && ( cell.kind == 1 ) )	{
+					searchAndShowAgendaByURI(cell.resource);
+				}
+			}
+		}
+	);
+	
+	
+}
+
+function searchAndShowAgendaByNumber(cisloagendy)	{
+
+	graph.clear();
+	$("#search").css("display", "block");
+	
+	var url = "http://linked.opendata.cz/sparql/?default-graph-uri=&query=prefix+ovm%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fovm%2F%3E%0D%0Aprefix+ovm-agendy%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fagendy%2F%3E%0D%0Aprefix+ovm-cinnosti%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fcinnosti%2F%3E%0D%0Aprefix+gr%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgoodrelations%2Fv1%23%3E%0D%0Aprefix+regorg%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fregorg%23%3E%0D%0Aprefix+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0Aprefix+adms%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fadms%23%3E%0D%0A%0D%0Aselect+%3Fresource+%3Flabel+%3Fkind%0D%0Awhere+%7B%0D%0A%0D%0A++%3Fagenda+a+ovm-agendy%3AAgenda+%3B%0D%0A++++skos%3Anotation+%3FagendaKod+.%0D%0A%09%0D%0A++filter+%28+%3FagendaKod+%3D+%22" + cisloagendy + "%22+%29%0D%0A++%0D%0A++filter+not+exists+%7B%3Fagenda+ovm-agendy%3AplatnostDo+%3FagendaPlatnostDo+.%7D%0D%0A%0D%0A%0D%0A++%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Organizace%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%3Fagenda+%28%3ForganizaceId+as+%3Fresource%29+%28%3ForganizaceNazev+as+%3Flabel%29+%28%22Organizace%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Fic%3E+%7B%0D%0A++++%3Forganizace+gr%3AlegalName+%3ForganizaceNazev+%3B%0D%0A++++++adms%3Aidentifier%2Fskos%3Anotation+%3ForganizaceId+.%0D%0A++%7D%0D%0A+%0D%0A++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Fares%2Fbasic%3E+%7B%0D%0A++++%3Forganizace+regorg%3AorgType%2Fskos%3AprefLabel+%3ForganizaceTypNazev+.%0D%0A++%7D%0D%0A%0D%0A++%3Fagenda+ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Agendy%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%3Fagenda+%28%3FagendaKod+as+%3Fresource%29+%28%3FagendaRozsirenyNazev+as+%3Flabel%29+%28%22Agenda%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++%3Fagenda+a+ovm-agendy%3AAgenda+%3B%0D%0A++++skos%3AprefLabel+%3FagendaNazev+%3B%0D%0A++++skos%3Anotation+%3FagendaKod+.%0D%0A%0D%0A++bind%28concat%28%3FagendaKod%2C+%22+%22%2C+%3FagendaNazev%29+as+%3FagendaRozsirenyNazev%29%0D%0A%0D%0A++%3Fagenda+ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Cinnosti%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%3Fagenda+%28%3FcinnostKod+as+%3Fresource%29+%28%3FcinnostRozsirenyNazev+as+%3Flabel%29+%28%22Cinnost%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++%3Fcinnost+a+ovm-cinnosti%3ACinnost+%3B%0D%0A++++skos%3AprefLabel+%3FcinnostNazev+%3B%0D%0A++++skos%3Anotation+%3FcinnostKod+.%0D%0A%0D%0A++bind%28concat%28%3FcinnostKod%2C+%22+%22%2C+%3FcinnostNazev%29+as+%3FcinnostRozsirenyNazev%29%0D%0A%0D%0A++%3Fcinnost+%5Eovm-agendy%3Acinnost+%3Fagenda+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Predpisy%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%3Fagenda+%28%3Fpredpis+as+%3Fresource%29+%28%3FpredpisCislo+as+%3Flabel%29+%28%22Predpis%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++%3Fagenda+a+ovm-agendy%3AAgenda+%3B%0D%0A++++ovm-agendy%3ApravniZaklad+%3Fpredpis+%3B%0D%0A++++ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A%0D%0A++optional+%7B%0D%0A++++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Flegislation%2Fpsp.cz%3E+%7B%0D%0A++++++%3Fpredpis+dcterms%3Atitle+%3FpredpisNazev+%3B%0D%0A++++++++dcterms%3Aidentifier+%3FpredpisCislo+.%0D%0A++++%7D%0D%0A++%7D%0D%0A%0D%0A%7D%0D%0A%0D%0A++%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
+	
+	$.ajax( url )
+		.done(
+			function(data)	{
+				showAgenda(data);
+				$("#search").css("display", "none");
+			}
+		);
+		
+}
+
+function searchAndShowAgendaByURI(agendauri)	{
+
+	graph.clear();
+	$("#search").css("display", "block");
+
+	var url = "http://linked.opendata.cz/sparql/?default-graph-uri=&query=prefix+ovm%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fovm%2F%3E%0D%0Aprefix+ovm-agendy%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fagendy%2F%3E%0D%0Aprefix+ovm-cinnosti%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fcinnosti%2F%3E%0D%0Aprefix+gr%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgoodrelations%2Fv1%23%3E%0D%0Aprefix+regorg%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fregorg%23%3E%0D%0Aprefix+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0Aprefix+adms%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fadms%23%3E%0D%0A%0D%0Aselect+%3Fresource+%3Flabel+%3Fkind%0D%0Awhere+%7B%0D%0A%0D%0A++%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Organizace%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%28%3Forganizace+as+%3Fresource%29+%28%3ForganizaceNazev+as+%3Flabel%29+%28%22Organizace%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++values+%3Fagenda+%7B%3C" + agendauri + "%3E%7D%0D%0A%0D%0A++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Fic%3E+%7B%0D%0A++++%3Forganizace+gr%3AlegalName+%3ForganizaceNazev+%3B%0D%0A++++++adms%3Aidentifier%2Fskos%3Anotation+%3ForganizaceId+.%0D%0A++%7D%0D%0A+%0D%0A++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Fares%2Fbasic%3E+%7B%0D%0A++++%3Forganizace+regorg%3AorgType%2Fskos%3AprefLabel+%3ForganizaceTypNazev+.%0D%0A++%7D%0D%0A%0D%0A++%3Fagenda+ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Agendy%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%28%3Fagenda+as+%3Fresource%29+%28%3FagendaRozsirenyNazev+as+%3Flabel%29+%28%22Agenda%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++values+%3Fagenda+%7B%3C" + agendauri + "%3E%7D%0D%0A%0D%0A++%3Fagenda+a+ovm-agendy%3AAgenda+%3B%0D%0A++++skos%3AprefLabel+%3FagendaNazev+%3B%0D%0A++++skos%3Anotation+%3FagendaKod+.%0D%0A%0D%0A++bind%28concat%28%3FagendaKod%2C+%22+%22%2C+%3FagendaNazev%29+as+%3FagendaRozsirenyNazev%29%0D%0A%0D%0A++%3Fagenda+ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Cinnosti%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%28%3Fcinnost+as+%3Fresource%29+%28%3FcinnostRozsirenyNazev+as+%3Flabel%29+%28%22Cinnost%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++values+%3Fagenda+%7B%3C" + agendauri + "%3E%7D%0D%0A%0D%0A++%3Fcinnost+a+ovm-cinnosti%3ACinnost+%3B%0D%0A++++skos%3AprefLabel+%3FcinnostNazev+%3B%0D%0A++++skos%3Anotation+%3FcinnostKod+.%0D%0A%0D%0A++bind%28concat%28%3FcinnostKod%2C+%22+%22%2C+%3FcinnostNazev%29+as+%3FcinnostRozsirenyNazev%29%0D%0A%0D%0A++%3Fcinnost+%5Eovm-agendy%3Acinnost+%3Fagenda+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Predpisy%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%28%3Fpredpis+as+%3Fresource%29+%28%3FpredpisCislo+as+%3Flabel%29+%28%22Predpis%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++values+%3Fagenda+%7B%3C" + agendauri + "%3E%7D%0D%0A%0D%0A++%3Fagenda+a+ovm-agendy%3AAgenda+%3B%0D%0A++++ovm-agendy%3ApravniZaklad+%3Fpredpis+%3B%0D%0A++++ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A%0D%0A++filter+not+exists+%7B%3Fagenda+ovm-agendy%3AplatnostDo+%3FagendaPlatnostDo+.%7D%0D%0A%0D%0A++optional+%7B%0D%0A++++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Flegislation%2Fpsp.cz%3E+%7B%0D%0A++++++%3Fpredpis+dcterms%3Atitle+%3FpredpisNazev+%3B%0D%0A++++++++dcterms%3Aidentifier+%3FpredpisCislo+.%0D%0A++++%7D%0D%0A++%7D%0D%0A%0D%0A%7D%0D%0A%0D%0A++%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
+	
+	$.ajax( url )
+		.done(
+			function(data)	{
+				showAgenda(data);
+				$("#search").css("display", "none");
+			}
+		);
+		
+}
+
+function searchAndShowOrganizationByURI(orguri)	{
+
+	graph.clear();
+	$("#search").css("display", "block");
+
+	var url = "http://linked.opendata.cz/sparql/?default-graph-uri=&query=prefix+ovm%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fovm%2F%3E%0D%0Aprefix+ovm-agendy%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fagendy%2F%3E%0D%0Aprefix+ovm-cinnosti%3A+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fontology%2Fdomain%2Fseznam.gov.cz%2Fcinnosti%2F%3E%0D%0Aprefix+gr%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgoodrelations%2Fv1%23%3E%0D%0Aprefix+regorg%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fregorg%23%3E%0D%0Aprefix+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0Aprefix+adms%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fadms%23%3E%0D%0A%0D%0Aselect+%3Fresource+%3Flabel+%3Fkind%0D%0Awhere+%7B%0D%0A%0D%0A++%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Organizace%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%28%3Forganizace+as+%3Fresource%29+%28%3ForganizaceNazev+as+%3Flabel%29+%28%22Organizace%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++values+%3Forganizace+%7B%3C" + orguri + "%3E%7D%0D%0A%0D%0A++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Fic%3E+%7B%0D%0A++++%3Forganizace+gr%3AlegalName+%3ForganizaceNazev+%3B%0D%0A++++++adms%3Aidentifier%2Fskos%3Anotation+%3ForganizaceId+.%0D%0A++%7D%0D%0A+%0D%0A++graph+%3Chttp%3A%2F%2Flinked.opendata.cz%2Fresource%2Fdataset%2Fares%2Fbasic%3E+%7B%0D%0A++++%3Forganizace+regorg%3AorgType%2Fskos%3AprefLabel+%3ForganizaceTypNazev+.%0D%0A++%7D%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D+union+%7B%0D%0A%0D%0A%23%23%23%23%23%23%23%0D%0A%23+Agendy%0D%0A%23%23%23%23%23%23%23%0D%0Aselect+distinct+%28%3Fagenda+as+%3Fresource%29+%28%3FagendaRozsirenyNazev+as+%3Flabel%29+%28%22Agenda%22+as+%3Fkind%29%0D%0Awhere+%7B%0D%0A%0D%0A++values+%3Forganizace+%7B%3C" + orguri + "%3E%7D%0D%0A%0D%0A++%3Fagenda+a+ovm-agendy%3AAgenda+%3B%0D%0A++++skos%3AprefLabel+%3FagendaNazev+%3B%0D%0A++++skos%3Anotation+%3FagendaKod+.%0D%0A%0D%0A++bind%28concat%28%3FagendaKod%2C+%22+%22%2C+%3FagendaNazev%29+as+%3FagendaRozsirenyNazev%29%0D%0A%0D%0A++filter+not+exists+%7B%3Fagenda+ovm-agendy%3AplatnostDo+%3FagendaPlatnostDo+.%7D%0D%0A%0D%0A++%3Fagenda+ovm-agendy%3Avykonava%7Covm-agendy%3AohlasovatelAgendy+%3Forganizace+.%0D%0A++%0D%0A%7D%0D%0A%0D%0A++%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on";
+	
+		$.ajax( url )
+			.done(
+				function(data)	{
+					showOrganization(data);
+					$("#search").css("display", "none");
+				}
+			);
+
+}
+
+
+$( "#agendaform" ).submit(
+
+	function ( event )	{
+	    var cisloagendy = $( "#cisloagendy" ).val();
+	    searchAndShowAgendaByNumber(cisloagendy);
+		event.preventDefault();
+	}
+
+);
+
+$( "#orgform" ).submit(
+
+	function ( event )	{
+	    var ic = $( "#ic" ).val();
+	    searchAndShowOrganizationByURI("http://linked.opendata.cz/resource/business-entity/CZ" + ic);
+		event.preventDefault();
+	}
+
+);
+
+</script>
+ 
+</body>
+</html>
