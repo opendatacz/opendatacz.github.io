@@ -6,7 +6,7 @@ author:
     twitter: jakub_klimek
 
 description: > # this means to ignore newlines until "baseurl:"
-  OpenData.cz is an initiative for transparend data infrastructure
+  OpenData.cz is an initiative for transparent data infrastructure
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://opendata.cz" # the base hostname & protocol for your site
 
