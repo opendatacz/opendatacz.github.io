@@ -1,0 +1,378 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s: <http://schema.org/> .
+@prefix ovm: <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> a skos:ConceptScheme ;
+	rdfs:label "Schéma konceptů pro stavy datových schránek datasetu OVM"@cs , "Concept scheme for states of data mailboxes in OVM dataset"@en ;
+	skos:hasTopConcept <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/1> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/2> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/3> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/4> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/5> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/6> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/1> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> ;
+	skos:notation "1" ;
+	skos:prefLabel "DS je přístupná, lze do ní dodávat zprávy, na Portále lze vyhledat"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/2> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> ;
+	skos:notation "2" ;
+	skos:prefLabel "DS je dočasně znepřístupněna na vlastní žádost, může být později opět zpřístupněna"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/3> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> ;
+	skos:notation "3" ;
+	skos:prefLabel "DS je dosud neaktivní, dosud se do ní nikdo nepřihlásil; byly-li přístupové údaje doručeny, je aktivována po 15 dnech od doručení, v opačném případě nebude aktivována nikdy"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/4> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> ;
+	skos:notation "4" ;
+	skos:prefLabel "DS je trvale znepřístupněna, čeká 3 roky na smazání; možno opět zpřístupnit."@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/5> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> ;
+	skos:notation "5" ;
+	skos:prefLabel "DS je smazána (přesto existuje v ISDS, ale nelze s ní nijak pracovat)"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/6> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> ;
+	skos:notation "6" ;
+	skos:prefLabel "DS je dočasně znepřístupněna zásahem zvenku, důvodem ze zákona, může být později opět zpřístupněna"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/StavDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> a skos:ConceptScheme ;
+	rdfs:label "Schéma konceptů pro typy datových schránek datasetu OVM"@cs , "Concept scheme for types of data mailboxes in OVM dataset"@en ;
+	skos:hasTopConcept <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM_NOTAR> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM_EXEKUT> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM_REQ> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PO> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PO_ZAK> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PO_REQ> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO_ADVOK> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO_DANPOR> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO_INSSPR> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/FO> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "OVM" ;
+	skos:prefLabel "OVM" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM_NOTAR> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "OVM_NOTAR" ;
+	skos:prefLabel "OVM_NOTAR" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM_EXEKUT> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "OVM_EXEKUT" ;
+	skos:prefLabel "OVM_EXEKUT" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/OVM_REQ> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "OVM_REQ" ;
+	skos:prefLabel "OVM_REQ" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PO> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PO" ;
+	skos:prefLabel "PO" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PO_ZAK> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PO_ZAK" ;
+	skos:prefLabel "PO_ZAK" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PO_REQ> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PO_REQ" ;
+	skos:prefLabel "PO_REQ" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PFO" ;
+	skos:prefLabel "PFO" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO_ADVOK> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PFO_ADVOK" ;
+	skos:prefLabel "PFO_ADVOK" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO_DANPOR> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PFO_DANPOR" ;
+	skos:prefLabel "PFO_DANPOR" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/PFO_INSSPR> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "PFO_INSSPR" ;
+	skos:prefLabel "PFO_INSSPR" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/FO> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> ;
+	skos:notation "FO" ;
+	skos:prefLabel "FO" ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypDatoveSchranky/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> a skos:ConceptScheme ;
+	rdfs:label "Schéma konceptů pro typy webových stránek datasetu OVM"@cs , "Concept scheme for web pages types in OVM dataset"@en ;
+	skos:hasTopConcept <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/1> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/2> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/3> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/4> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/5> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/6> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/7> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/8> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/9> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/10> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/11> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/12> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/13> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/14> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/15> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/16> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/17> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/18> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/19> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/20> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/21> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/1> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "1" ;
+	skos:prefLabel "oficiální"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/2> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "2" ;
+	skos:prefLabel "získání informací"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/3> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "3" ;
+	skos:prefLabel "řešení životních situací"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/4> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "4" ;
+	skos:prefLabel "předpisy"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/5> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "5" ;
+	skos:prefLabel "podatelna"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/6> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "6" ;
+	skos:prefLabel "elektronická úřední deska"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/7> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "7" ;
+	skos:prefLabel "ostatní"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/8> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "8" ;
+	skos:prefLabel "seznam hlavních dokumentů"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/9> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "9" ;
+	skos:prefLabel "rozpočet"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/10> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "10" ;
+	skos:prefLabel "žádosti o informace"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/11> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "11" ;
+	skos:prefLabel "příjem žádostí a dalších podání"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/12> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "12" ;
+	skos:prefLabel "opravné prostředky"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/13> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "13" ;
+	skos:prefLabel "formuláře"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/14> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "14" ;
+	skos:prefLabel "používané předpisy"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/15> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "15" ;
+	skos:prefLabel "vydané předpisy"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/16> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "16" ;
+	skos:prefLabel "sazebník úhrad za poskytování informací"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/17> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "17" ;
+	skos:prefLabel "usnesení o výši úhrad za poskytování informací"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/18> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "18" ;
+	skos:prefLabel "vzory licenčních smluv"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/19> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "19" ;
+	skos:prefLabel "výhradní licence"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/20> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "20" ;
+	skos:prefLabel "výroční zpráva"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/21> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> ;
+	skos:notation "21" ;
+	skos:prefLabel "organizační struktura"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypWWW/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/ConceptScheme> a skos:ConceptScheme ;
+	rdfs:label "Schéma konceptů pro typy emailů datasetu OVM"@cs , "Concept scheme for email types in OVM dataset"@en ;
+	skos:hasTopConcept <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/1> , <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/2> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/1> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/ConceptScheme> ;
+	skos:notation "1" ;
+	skos:prefLabel "oficiální"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/ConceptScheme> .
+
+<http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/2> a skos:Concept ;
+	skos:inScheme <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/ConceptScheme> ;
+	skos:notation "2" ;
+	skos:prefLabel "podatelna"@cs ;
+	skos:topConceptOf <http://linked.opendata.cz/ontology/domain/seznam.gov.cz/ovm/TypEmailu/ConceptScheme> .
+
+ovm:business-entity a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Business entity"@en , "Subjekt"@cs ;
+	rdfs:range gr:BusinessEntity ;
+	rdfs:domain ovm:OVM .
+
+ovm:OVM a rdfs:Class ;
+	rdfs:label "Orgán veřejné moci"@cs , "Institution of public power"@en .
+
+ovm:overeniSubjektem a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Ověření subjektem"@cs , "Verified by subject"@en ;
+	rdfs:range xsd:boolean ;
+	rdfs:domain ovm:OVM .
+
+ovm:primarniOvm a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Primární OVM"@cs , "Primary IPP"@en ;
+	rdfs:range xsd:boolean ;
+	rdfs:domain ovm:OVM .
+
+ovm:typSubjektuText a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Typ subjektu (text)"@cs , "Type of subject (text)"@en ;
+	rdfs:range xsd:string ;
+	rdfs:domain ovm:OVM .
+
+ovm:datovaSchranka a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Datová schránka"@cs , "Data mailbox"@en ;
+	rdfs:range ovm:DatovaSchranka ;
+	rdfs:domain ovm:OVM .
+
+ovm:DatovaSchranka a rdfs:Class ;
+	rdfs:label "Datová schránka"@cs , "Data mailbox"@en .
+
+ovm:WWW a rdfs:Class ;
+	rdfs:label "WWW stránka"@cs , "WWW page"@en .
+
+ovm:www a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "WWW stránka"@cs , "WWW page"@en ;
+	rdfs:range ovm:WWW ;
+	rdfs:domain ovm:OVM .
+
+ovm:dalsiDatovaSchranka a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Další datová schránka"@cs , "Another data mailbox"@en ;
+	rdfs:range ovm:DatovaSchranka ;
+	rdfs:domain ovm:OVM .
+
+ovm:funkce a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Funkce"@cs , "Role"@en ;
+	rdfs:range xsd:string ;
+	rdfs:domain ovm:OVM .
+
+ovm:datumOvereni a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Datum ověření"@cs , "Verification date"@en ;
+	rdfs:range xsd:date ;
+	rdfs:domain ovm:OVM .
+
+ovm:statutarniZastupce a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Role"@en , "Statutární zástupce"@cs ;
+	rdfs:range foaf:Person , s:Person ;
+	rdfs:domain ovm:OVM .
+
+ovm:pravniForma a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Právní forma"@cs , "Legal type"@en ;
+	rdfs:range skos:Concept , ovm:PravniForma ;
+	rdfs:domain ovm:OVM .
+
+ovm:TypSubjektu a rdfs:Class ;
+	rdfs:label "Typ subjektu"@cs , "Type of subject"@en .
+
+ovm:typSubjektu a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Typ subjektu"@cs , "Type of subject"@en ;
+	rdfs:range skos:Concept , ovm:TypSubjektu ;
+	rdfs:domain ovm:OVM .
+
+ovm:cisloUctu a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Číslo účtu"@cs , "Bank account number"@en ;
+	rdfs:range xsd:string ;
+	rdfs:domain ovm:OVM .
+
+ovm:StavSubjektu a rdfs:Class ;
+	rdfs:label "Stav subjektu"@cs , "State of subject"@en .
+
+ovm:stavSubjektu a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Stav subjektu"@cs , "State of subject"@en ;
+	rdfs:range skos:Concept , ovm:StavSubjektu ;
+	rdfs:domain ovm:OVM .
+
+ovm:stavDatoveSchranky a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Stav datové schránky"@cs , "State of data mailbox"@en ;
+	rdfs:range skos:Concept , ovm:StavSubjektu ;
+	rdfs:domain ovm:OVM .
+
+ovm:StavDatoveSchranky a rdfs:Class ;
+	rdfs:label "Stav datové schránky"@cs , "State of data mailbox"@en .
+
+ovm:bankovniSpojeni a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Bankovní spojení"@cs , "Banking information"@en ;
+	rdfs:range ovm:BankovniSpojeni ;
+	rdfs:domain ovm:OVM .
+
+ovm:BankovniSpojeni a rdfs:Class ;
+	rdfs:label "Bankovní spojení"@cs , "Banking information"@en .
+
+ovm:TypDatoveSchranky a rdfs:Class ;
+	rdfs:label "Typ datové schránky"@cs , "Type of data mailbox"@en .
+
+ovm:typDatoveSchranky a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> ;
+	rdfs:label "Typ datové schránky"@cs , "Type of data mailbox"@en ;
+	rdfs:range skos:Concept , ovm:StavSubjektu ;
+	rdfs:domain ovm:OVM .
